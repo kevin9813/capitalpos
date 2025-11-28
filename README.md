@@ -1,7 +1,7 @@
 # CapitalPOS
 Pos para ventas 
 
-# Iniciae
+# Iniciar
 composer install  \
 docker compose up -d
 
