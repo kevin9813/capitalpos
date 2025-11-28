@@ -2,7 +2,7 @@
 Pos para ventas 
 
 # Iniciae
-composer install
+composer install  \
 docker compose up -d
 
 # Si no quedan los permisos
