@@ -15,5 +15,5 @@ php artisan route:clear \
 exit
 
 # Crear y migrar bd inicial
-./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan migrate  \
 ./vendor/bin/sail artisan db:seed 
