@@ -11,6 +11,7 @@ use Livewire\Component;
 
 class Billing extends Component
 {
+    public $showModalGastos = false;
     public $showModalTurno = false;
     public $showReporte = false;
     public $modalCerrarTurno = false;
