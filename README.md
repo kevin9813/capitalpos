@@ -3,12 +3,12 @@ Pos para ventas
 
 
 # Si no quedan los permisos
-docker compose exec laravel.test bash
-rm -rf storage/framework/views/*.php
-php artisan view:clear
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
+docker compose exec laravel.test bash \
+rm -rf storage/framework/views/*.php \
+php artisan view:clear \
+php artisan cache:clear \
+php artisan config:clear \
+php artisan route:clear \
 exit
 
 
