@@ -1,0 +1,15 @@
+*.log
+.env
+/vendor
+.env.backup
+.env.production
+/.vscode
+/.zed
+/public/build
+/public/logos/*
+/public/storage
+/storage/*.key
+/storage/pail
+Homestead.json
+Homestead.yaml
+Thumbs.db

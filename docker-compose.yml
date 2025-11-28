@@ -1,0 +1,56 @@
+services:
+  laravel.test:
+    build:
+      context: ./vendor/laravel/sail/runtimes/8.4
+      dockerfile: Dockerfile
+      args:
+        WWWUSER: ${WWWUSER:-1000}
+        WWWGROUP: ${WWWGROUP:-1000}
+    image: sail-8.4/app
+    ports:
+      - "8080:80"
+      - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
+    environment:
+      WWWUSER: ${WWWUSER:-1000}
+      WWWGROUP: ${WWWGROUP:-1000}
+      LARAVEL_SAIL: 1
+    volumes:
+      - ".:/var/www/html"
+    depends_on:
+      - pgsql
+    networks:
+      - sail
+
+  pgsql:
+    image: postgres:16
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
+    networks:
+      - sail
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+        - pgsql
+    ports:
+        - "5050:80"
+    environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    networks:
+      - sail
+
+networks:
+  sail:
+
+volumes:
+  pgsql-data:
+  pgadmin-data:
+
