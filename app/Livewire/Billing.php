@@ -4,10 +4,12 @@ namespace App\Livewire;
 use App\Models\Product;
 use App\Models\CashShift;
 use App\Models\Sale;
+use App\Models\Expense;
 
 use App\Http\Controllers\BillingController;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class Billing extends Component
 {
@@ -30,12 +32,14 @@ class Billing extends Component
     {
         $this->shift = CashShift::where('user_id', session('userId'))
             ->where('status', 'open')
+            ->latest()
             ->first();
 
         if (!$this->shift) {
             $this->showModalTurno = true;
         }else{
             $this->facturas = $this->shift->sales()->with('details')->orderBy('id', 'desc')->get();
+            $this->total_expenses = intval($this->shift->total_expenses);
         }
 
 
@@ -210,5 +214,6 @@ class Billing extends Component
         $this->dispatch('alert', title: 'Turno cerrado', text: 'El turno se ha cerrado correctamente.', icon: 'success');
 
     }
+
 
 }

@@ -4,6 +4,7 @@
 
     <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-xl w-[90%] max-w-3xl">
         
+        <div class="max-h-[80vh] overflow-y-auto p-6">
          <!-- HEADER -->
         <div class="text-center mb-6">
             <h1 class="text-2xl font-bold tracking-wide"><i class="fa-solid fa-file-zipper"></i> Reporte del Turno</h1>
@@ -74,7 +75,7 @@
                 <div class="pt-2">
                     <span class="font-semibold text-gray-300 text-lg">Cuadre:</span>
                     <span class="text-blue-400 font-bold text-lg">
-                        $ <?php echo e($facturas->sum('total')-($shift->closing_amount+$facturas->where('payment_method', 'Banco')->sum('total')+$facturas->where('payment_method', 'Transferencia')->sum('total')+$shift->total_expenses)); ?>
+                        $ <?php echo e(number_format(($facturas->where('payment_method', 'Efectivo')->sum('total')+$shift->total_expenses)-$shift->closing_amount)); ?>
 
                     </span>
                 </div>
@@ -82,6 +83,7 @@
 
             
             <hr class="border-gray-700 my-6">
+            <h3>Ventas</h3>
             <div class="max-h-60 overflow-y-auto border rounded">
                 <table class="w-full text-sm">
                     <thead class="bg-gray-200 dark:bg-gray-700">
@@ -103,6 +105,30 @@
                 </table>
             </div>
 
+            <hr class="border-gray-700 my-6">
+            <h3>Gastos</h3>
+            <div class="max-h-60 overflow-y-auto border rounded">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-200 dark:bg-gray-700">
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Valor</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $expenses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr class="border-b dark:border-gray-700">
+                                <td class="p-2"><?php echo e($exp->description); ?></td>
+                                <td class="p-2">$<?php echo e(number_format($exp->price, 0)); ?></td>
+                                
+                            </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                    </tbody>
+                </table>
+            </div>
+
+
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
         
@@ -118,6 +144,8 @@
                 Imprimir
             </button>
             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+        </div>
+
         </div>
 
     </div>

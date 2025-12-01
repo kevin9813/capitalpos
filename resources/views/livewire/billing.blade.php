@@ -29,7 +29,7 @@
         <div 
             x-data="{ codigo: '' }" 
             @keydown.f8.window="$wire.facturar()"
-            @keydown.f9.window="$wire.set('showModalGastos', true)"
+            @keydown.f9.window="$dispatch('open-expense-modal')"
             class="p-6 w-full max-w-5xl mx-auto"
             >
             {{-- Título --}}
@@ -226,7 +226,7 @@
                 <!--Switch de auto impresión -->
                 <div class="flex items-center gap-3">
                     <div class="flex items-center gap-2">
-                        <button wire:click="$set('showModalGastos', true)" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        <button wire:click="$dispatch('open-expense-modal')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                             <i class="fa-solid fa-file-zipper"></i> Gastos
                         </button>
                     </div>
@@ -295,38 +295,7 @@
         </div>
     @endif
 
-    @if($showModalGastos)
-        <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-96">
-
-                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
-                    Gastos
-                </h2>
-
-                <hr>
-                <label for="opening_amount" class="block mb-2 text-sm">Descripcio:n</label>
-                <input type="text" step="0.01" wire:model="closing_amount"
-                    class="w-full text-black rounded p-2 mb-4" placeholder="Ejemplo: Recogida, Pago..">
-
-                <label for="opening_amount" class="block mb-2 text-sm">Valor:</label>
-                <input type="number" step="0.01" wire:model="total_expenses"
-                    class="w-full text-black rounded p-2 mb-4" placeholder="Ejemplo: 50000">
-                <hr>
-
-                <div class="flex justify-end mt-4 space-x-2">
-                    <!-- Confirmar -->
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                        <i class="fa-solid fa-file-arrow-down"></i> Guardar
-                    </button>
-                    <!-- Cancelar -->
-                    <button wire:click="$set('showModalGastos', false)" class="px-4 py-2 bg-gray-300 dark:bg-gray-700 dark:text-white rounded">
-                        Cerrar
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    @endif
+    <livewire:expenses />
 
     @includeWhen($showReporte, 'livewire.reports.reporte-turno')
 </div>

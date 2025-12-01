@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\CashShift;
+use App\Models\Expense;
+
 
 class Sales extends Component
 {
@@ -11,9 +13,7 @@ class Sales extends Component
     public $cashShifts = [];
 
     //Reporte
-    public $shift;
-    public $facturas;
-
+    public $shift, $facturas, $expenses;
 
 
     public function render()
@@ -40,6 +40,7 @@ class Sales extends Component
     {
         $this->shift = $cashShift;
         $this->facturas = $this->shift->sales()->with('details')->orderBy('id', 'desc')->get();
+        $this->expenses =  Expense::where('cash_shift_id', $cashShift->id)->orderBy('id', 'desc')->get();
 
         $this->showReporte = true;
     }

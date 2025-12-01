@@ -63,3 +63,4 @@ document.addEventListener('livewire:init', () => {
     });
 
 });
+
